@@ -1,0 +1,5 @@
+{
+  "javascript.implicitProjectConfig.checkJs": false,
+  "javascript.validate.enable": false,
+  "typescript.surveys.enabled": false
+}
