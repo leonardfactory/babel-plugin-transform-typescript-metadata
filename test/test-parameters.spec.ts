@@ -25,10 +25,9 @@ const { fixtures: fixturesNode } = create({
     ['@babel/preset-typescript', { allExtensions: true }]
   ],
   plugins: [
-    require.resolve('../babel-plugin-typescript-metadata'),
+    require.resolve('../src/plugin'),
     ['@babel/plugin-proposal-decorators', { legacy: true }],
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-    '@babel/plugin-proposal-object-rest-spread'
+    ['@babel/plugin-proposal-class-properties', { loose: true }]
   ]
 });
 
