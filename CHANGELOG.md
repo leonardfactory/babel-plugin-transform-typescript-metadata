@@ -1,3 +1,21 @@
+# [0.2.0](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.1.1...v0.2.0) (2019-03-24)
+
+
+### ✨ Features
+
+* Enhance type serialization following TSC [#1](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/issues/1) ([5a76db1](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/5a76db1))
+
+
+### 🐛 Bug Fixes
+
+* Fix parameter assignments type serialization ([0eb91bb](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/0eb91bb))
+
+
+### 📚 Documentation
+
+* Add motivation to README ([f59c802](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/f59c802))
+
+
 ## [0.1.1](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.1.0...v0.1.1) (2019-03-24)
 
 
