@@ -19,7 +19,7 @@
     "release": "yarn test && yarn build && release-it",
     "test": "jest",
     "test:dev": "jest --watch",
-    "test:ci": "jest --ci --runInBand --coverage --reporters=default --reporters=jest-junit"
+    "test:ci": "jest --ci --runInBand --coverage"
   },
   "husky": {
     "hooks": {
