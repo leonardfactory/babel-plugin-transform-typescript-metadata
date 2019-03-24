@@ -25,7 +25,7 @@ inject()(MyOtherClass.prototype, "method", 0);
 demo()(MyOtherClass.prototype, "methodUndecorated", 0);
 inject('KIND')(MyOtherClass, undefined, 1);
 inject()(MyOtherClass, undefined, 0);
-let DecoratedClass = (_dec3 = Reflect.metadata("design:paramtypes", [typeof Injected === "undefined" ? Object : Injected, typeof Injected === "undefined" ? Object : Injected]), _dec4 = decorate('example'), _dec5 = Reflect.metadata("design:paramtypes", [null]), Decorate(_class2 = _dec3(_class2 = (_class3 = class DecoratedClass {
+let DecoratedClass = (_dec3 = Reflect.metadata("design:paramtypes", [typeof Injected === "undefined" ? Object : Injected, typeof Injected === "undefined" ? Object : Injected]), _dec4 = decorate('example'), _dec5 = Reflect.metadata("design:paramtypes", [String]), Decorate(_class2 = _dec3(_class2 = (_class3 = class DecoratedClass {
   constructor(module, otherModule) {
     this.module = module;
   }
