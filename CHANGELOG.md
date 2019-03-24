@@ -1,3 +1,16 @@
+## [0.2.1](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.2.0...v0.2.1) (2019-03-24)
+
+
+### 📚 Documentation
+
+* Add current pitfalls to README ([2f2b888](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/2f2b888))
+
+
+### 🏗 Chore
+
+* Add package.json keywords ([97690ca](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/97690ca))
+
+
 # [0.2.0](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.1.1...v0.2.0) (2019-03-24)
 
 
