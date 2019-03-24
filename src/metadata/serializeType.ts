@@ -9,18 +9,28 @@ function createVoidZero() {
   return t.unaryExpression('void', t.numericLiteral(0));
 }
 
+/**
+ * Given a paramater (or class property) node it returns the first identifier
+ * containing the TS Type Annotation.
+ *
+ * @todo Array and Objects spread are not supported.
+ * @todo Rest parameters are not supported.
+ */
+function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
+  if (param.type === 'ClassProperty') return param;
+  if (param.type === 'Identifier') return param;
+
+  if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier')
+    return param.left;
+
+  if (param.type === 'TSParameterProperty')
+    return getTypedNode(param.parameter);
+
+  return null;
+}
+
 export function serializeType(path: NodePath<any>, param: Parameter) {
-  const node =
-    param.type === 'Identifier' || param.type === 'ClassProperty'
-      ? param
-      : param.type === 'TSParameterProperty'
-      ? param.parameter.type === 'AssignmentPattern' &&
-        param.parameter.left.type === 'Identifier'
-        ? param.parameter.left
-        : param.parameter.type === 'Identifier'
-        ? param.parameter
-        : null
-      : null;
+  const node = getTypedNode(param);
 
   if (node == null) return createVoidZero();
   if (!node.typeAnnotation || node.typeAnnotation.type !== 'TSTypeAnnotation')

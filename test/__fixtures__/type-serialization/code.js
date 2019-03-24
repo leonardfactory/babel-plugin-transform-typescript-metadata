@@ -24,6 +24,7 @@ class Sample {
     p15: (abc: any) => void,
     p16: false,
     p17: true,
+    p18: string = 'abc'
   ) {}
 
   @Decorate
@@ -45,12 +46,22 @@ class Sample {
     p14: (string | (string | null)),
     p15: Object,
     p16: any,
-    p17: string = ''
   ) {}
 
+  /**
+   * Member Expression
+   */
   @Decorate()
   method2(
     p0: Decorate.Name = 'abc',
     p1: Decorate.Name 
+  ) {}
+
+  /**
+   * Assignments
+   */
+  @Decorate()
+  assignments(
+    p0: string = 'abc'
   ) {}
 }
