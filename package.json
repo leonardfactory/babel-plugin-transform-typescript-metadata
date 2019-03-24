@@ -9,6 +9,13 @@
   "files": [
     "lib/"
   ],
+  "keywords": [
+    "babel",
+    "babel-plugin",
+    "babel-typescript",
+    "decorators",
+    "reflect-metadata"
+  ],
   "scripts": {
     "dev": "babel src -w -d lib -x '.ts,.tsx'",
     "build": "yarn build:lib && yarn build:types",
