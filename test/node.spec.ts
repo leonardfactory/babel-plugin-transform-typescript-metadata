@@ -1,6 +1,9 @@
 import path from 'path';
 import { create } from 'babel-test';
 
+import { toMatchFile } from 'jest-file-snapshot';
+expect.extend({ toMatchFile });
+
 const { fixtures } = create({
   presets: [
     ['@babel/preset-env', { useBuiltIns: false, targets: { node: true } }],
