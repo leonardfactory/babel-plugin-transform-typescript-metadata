@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-typescript-metadata",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Babel plugin to emit decorator metadata like typescript compiler",
   "main": "lib/plugin.js",
   "repository": "https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata.git",

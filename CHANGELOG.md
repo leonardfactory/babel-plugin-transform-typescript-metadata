@@ -1,3 +1,11 @@
+## [0.1.1](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.1.0...v0.1.1) (2019-03-24)
+
+
+### 📚 Documentation
+
+* Add CHANGELOG ([880b618](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/880b618))
+
+
 # 0.1.0 (2019-03-24)
 
 
