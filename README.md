@@ -24,6 +24,7 @@ flags](https://www.typescriptlang.org/docs/handbook/decorators.html) provide.
 This means that code like:
 
 ```ts
+import { Injectable, Inject } from 'some-di-library'; // Just an example
 import { MyService } from './MyService';
 import { Configuration } from './Configuration';
 
