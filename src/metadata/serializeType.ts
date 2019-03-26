@@ -17,6 +17,8 @@ function createVoidZero() {
  * @todo Rest parameters are not supported.
  */
 function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
+  if (param == null) return null;
+
   if (param.type === 'ClassProperty') return param;
   if (param.type === 'Identifier') return param;
 
@@ -29,18 +31,25 @@ function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
   return null;
 }
 
-export function serializeType(path: NodePath<any>, param: Parameter) {
+export function serializeType(
+  classPath: NodePath<t.ClassDeclaration>,
+  param: Parameter
+) {
   const node = getTypedNode(param);
-
   if (node == null) return createVoidZero();
+
   if (!node.typeAnnotation || node.typeAnnotation.type !== 'TSTypeAnnotation')
     return createVoidZero();
 
   const annotation = node.typeAnnotation.typeAnnotation;
-  return serializeTypeNode(annotation);
+  const className = classPath.node.id ? classPath.node.id.name : '';
+  return serializeTypeNode(className, annotation);
 }
 
-function serializeTypeReferenceNode(node: t.TSTypeReference) {
+function serializeTypeReferenceNode(
+  className: string,
+  node: t.TSTypeReference
+) {
   /**
    * We need to save references to this type since it is going
    * to be used as a Value (and not just as a Type) here.
@@ -49,6 +58,14 @@ function serializeTypeReferenceNode(node: t.TSTypeReference) {
    * `path.scope.crawl()` which updates the bindings.
    */
   const reference = serializeReference(node.typeName);
+
+  /**
+   * We should omit references to self (class) since it will throw a
+   * ReferenceError at runtime due to babel transpile output.
+   */
+  if (isClassType(className, reference)) {
+    return t.identifier('Object');
+  }
 
   /**
    * We don't know if type is just a type (interface, etc.) or a concrete
@@ -67,10 +84,32 @@ function serializeTypeReferenceNode(node: t.TSTypeReference) {
   );
 }
 
+/**
+ * Checks if node (this should be the result of `serializeReference`) member
+ * expression or identifier is a reference to self (class name).
+ * In this case, we just emit `Object` in order to avoid ReferenceError.
+ */
+export function isClassType(className: string, node: t.Expression): boolean {
+  switch (node.type) {
+    case 'Identifier':
+      return node.name === className;
+    case 'MemberExpression':
+      return isClassType(className, node.object);
+    default:
+      throw new Error(
+        `The property expression at ${
+          node.start
+        } is not valid as a Type to be used in Reflect.metadata`
+      );
+  }
+}
+
 function serializeReference(
   typeName: t.Identifier | t.TSQualifiedName
 ): t.Identifier | t.MemberExpression {
-  if (typeName.type === 'Identifier') return t.identifier(typeName.name);
+  if (typeName.type === 'Identifier') {
+    return t.identifier(typeName.name);
+  }
   return t.memberExpression(serializeReference(typeName.left), typeName.right);
 }
 
@@ -87,7 +126,7 @@ type SerializedType =
  * available here:
  *  https://github.com/Microsoft/TypeScript/blob/2932421370df720f0ccfea63aaf628e32e881429/src/compiler/transformers/ts.ts
  */
-function serializeTypeNode(node: t.TSType): SerializedType {
+function serializeTypeNode(className: string, node: t.TSType): SerializedType {
   if (node === undefined) {
     return t.identifier('Object');
   }
@@ -100,7 +139,7 @@ function serializeTypeNode(node: t.TSType): SerializedType {
       return createVoidZero();
 
     case 'TSParenthesizedType':
-      return serializeTypeNode(node.typeAnnotation);
+      return serializeTypeNode(className, node.typeAnnotation);
 
     case 'TSFunctionType':
     case 'TSConstructorType':
@@ -145,14 +184,14 @@ function serializeTypeNode(node: t.TSType): SerializedType {
       return t.identifier('Symbol');
 
     case 'TSTypeReference':
-      return serializeTypeReferenceNode(node);
+      return serializeTypeReferenceNode(className, node);
 
     case 'TSIntersectionType':
     case 'TSUnionType':
-      return serializeTypeList(node.types);
+      return serializeTypeList(className, node.types);
 
     case 'TSConditionalType':
-      return serializeTypeList([node.trueType, node.falseType]);
+      return serializeTypeList(className, [node.trueType, node.falseType]);
 
     case 'TSTypeQuery':
     case 'TSTypeOperator':
@@ -178,7 +217,10 @@ function serializeTypeNode(node: t.TSType): SerializedType {
  *
  *  https://github.com/Microsoft/TypeScript/blob/2932421370df720f0ccfea63aaf628e32e881429/src/compiler/transformers/ts.ts
  */
-function serializeTypeList(types: ReadonlyArray<t.TSType>): SerializedType {
+function serializeTypeList(
+  className: string,
+  types: ReadonlyArray<t.TSType>
+): SerializedType {
   let serializedUnion: SerializedType | undefined;
 
   for (let typeNode of types) {
@@ -194,7 +236,7 @@ function serializeTypeList(types: ReadonlyArray<t.TSType>): SerializedType {
     ) {
       continue; // Elide null and undefined from unions for metadata, just like what we did prior to the implementation of strict null checks
     }
-    const serializedIndividual = serializeTypeNode(typeNode);
+    const serializedIndividual = serializeTypeNode(className, typeNode);
 
     if (
       t.isIdentifier(serializedIndividual) &&
