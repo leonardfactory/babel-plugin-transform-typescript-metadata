@@ -17,6 +17,8 @@ function createVoidZero() {
  * @todo Rest parameters are not supported.
  */
 function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
+  if (param == null) return null;
+
   if (param.type === 'ClassProperty') return param;
   if (param.type === 'Identifier') return param;
 
@@ -34,8 +36,8 @@ export function serializeType(
   param: Parameter
 ) {
   const node = getTypedNode(param);
-
   if (node == null) return createVoidZero();
+
   if (!node.typeAnnotation || node.typeAnnotation.type !== 'TSTypeAnnotation')
     return createVoidZero();
 
@@ -87,7 +89,7 @@ function serializeTypeReferenceNode(
  * expression or identifier is a reference to self (class name).
  * In this case, we just emit `Object` in order to avoid ReferenceError.
  */
-function isClassType(className: string, node: t.Expression): boolean {
+export function isClassType(className: string, node: t.Expression): boolean {
   switch (node.type) {
     case 'Identifier':
       return node.name === className;
