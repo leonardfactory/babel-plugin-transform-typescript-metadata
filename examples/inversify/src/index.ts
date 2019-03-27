@@ -14,8 +14,24 @@ let container = new Container();
 container.bind<PrintService>('PrintService').to(PrintService);
 let { lazyInject } = getDecorators(container);
 
+/**
+ * Additional function to make properties decorators compatible with babel.
+ */
+function fixPropertyDecorator<T extends Function>(decorator: T): T {
+  return ((...args: any[]) => (
+    target: any,
+    propertyName: any,
+    ...decoratorArgs: any[]
+  ) => {
+    decorator(...args)(target, propertyName, ...decoratorArgs);
+    return Object.getOwnPropertyDescriptor(target, propertyName);
+  }) as any;
+}
+
+const lazyInjectFix = fixPropertyDecorator(lazyInject);
+
 class Book {
-  @lazyInject('PrintService')
+  @lazyInjectFix('PrintService')
   private printService!: PrintService;
 
   public constructor(public author: string, public summary: string) {}
