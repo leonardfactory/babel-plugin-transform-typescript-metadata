@@ -106,6 +106,37 @@ With `.babelrc`:
 }
 ```
 
+### Usage with [InversifyJS](http://inversify.io)
+
+If you are using normal dependency injection letting Inversify **create your instances**, you should be fine with all kind of decorators.
+
+Instead, if you are using **property injection**, when [the container does not
+create the instances](https://github.com/inversify/InversifyJS/blob/master/wiki/property_injection.md#when-we-cannot-use-inversifyjs-to-create-an-instance-of-a-class),
+you would likely encounter errors since babel
+decorators are not exactly the same as TypeScript.
+
+You can fix it by _enhancing property decorators_ with the following function:
+
+```ts
+import getDecorators from 'inversify-inject-decorators';
+// setup the container...
+let { lazyInject: originalLazyInject } = getDecorators(container);
+
+// Additional function to make properties decorators compatible with babel.
+function fixPropertyDecorator<T extends Function>(decorator: T): T {
+  return ((...args: any[]) => (
+    target: any,
+    propertyName: any,
+    ...decoratorArgs: any[]
+  ) => {
+    decorator(...args)(target, propertyName, ...decoratorArgs);
+    return Object.getOwnPropertyDescriptor(target, propertyName);
+  }) as any;
+}
+
+export const lazyInject = fixPropertyDecorator(originalLazyInject);
+```
+
 ## Current Pitfalls
 
 - We cannot know if type annotations are just types (i.e. `IMyInterface`) or
