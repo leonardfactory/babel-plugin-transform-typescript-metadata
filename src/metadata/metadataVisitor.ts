@@ -15,7 +15,6 @@ export function metadataVisitor(
         field.kind === 'constructor' ? classNode.decorators : field.decorators;
 
       if (!decorators || decorators.length === 0) return;
-      debugger;
       if(field.kind === 'get') {
         field.decorators!.push(
           t.decorator(

@@ -38,7 +38,6 @@ export function serializeType(
   classPath: NodePath<t.ClassDeclaration>,
   param: Parameter
 ) {
-  debugger;
   const node = getTypedNode(param);
   if (node == null) return createVoidZero();
 
