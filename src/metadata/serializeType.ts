@@ -3,7 +3,7 @@ import { NodePath } from '@babel/traverse';
 
 type InferArray<T> = T extends Array<infer A> ? A : never;
 
-type Parameter = InferArray<t.ClassMethod['params']> | t.ClassProperty;
+type Parameter = InferArray<t.ClassMethod['params']> | t.ClassProperty | t.ClassMethod['returnType'];
 
 function createVoidZero() {
   return t.unaryExpression('void', t.numericLiteral(0));
@@ -16,7 +16,7 @@ function createVoidZero() {
  * @todo Array and Objects spread are not supported.
  * @todo Rest parameters are not supported.
  */
-function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
+function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | t.TSTypeAnnotation | null {
   if (param == null) return null;
 
   if (param.type === 'ClassProperty') return param;
@@ -28,6 +28,9 @@ function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
   if (param.type === 'TSParameterProperty')
     return getTypedNode(param.parameter);
 
+  if (param.type === 'TSTypeAnnotation')
+    return param;
+  
   return null;
 }
 
@@ -35,15 +38,21 @@ export function serializeType(
   classPath: NodePath<t.ClassDeclaration>,
   param: Parameter
 ) {
+  debugger;
   const node = getTypedNode(param);
   if (node == null) return createVoidZero();
 
-  if (!node.typeAnnotation || node.typeAnnotation.type !== 'TSTypeAnnotation')
+  if (!node.typeAnnotation || (node.typeAnnotation.type !== 'TSTypeAnnotation' && node.type !== 'TSTypeAnnotation'))
     return createVoidZero();
-
-  const annotation = node.typeAnnotation.typeAnnotation;
-  const className = classPath.node.id ? classPath.node.id.name : '';
-  return serializeTypeNode(className, annotation);
+  if(node.type === 'TSTypeAnnotation') {
+    const annotation = node.typeAnnotation;
+    const className = classPath.node.id ? classPath.node.id.name : '';
+    return serializeTypeNode(className, annotation);
+  } else {
+    const annotation = (<any>node).typeAnnotation.typeAnnotation;
+    const className = classPath.node.id ? classPath.node.id.name : '';
+    return serializeTypeNode(className, annotation);
+  }
 }
 
 function serializeTypeReferenceNode(
