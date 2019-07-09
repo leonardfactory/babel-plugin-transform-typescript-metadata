@@ -178,6 +178,7 @@ function serializeTypeNode(className: string, node: t.TSType): SerializedType {
       }
 
     case 'TSNumberKeyword':
+    case 'TSBigIntKeyword':
       return t.identifier('Number');
 
     case 'TSSymbolKeyword':
