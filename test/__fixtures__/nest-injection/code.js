@@ -10,6 +10,9 @@ export class AppController {
   @Inject()
   private appService2: AppService;
 
+  @Inject()
+  private appService3: import('./app.service').AppService;
+
   @Get()
   getHello(): string {
     return this.appService.getHello();
