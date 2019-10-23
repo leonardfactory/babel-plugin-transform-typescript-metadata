@@ -4,12 +4,19 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 import { Decorate } from './Decorate';
 const sym = Symbol();
-let Sample = (_dec = Decorate(), _dec2 = Reflect.metadata("design:paramtypes", [typeof String === "undefined" ? Object : String, typeof Number === "undefined" ? Object : Number, Number, String, Boolean, String, Number, typeof Object === "undefined" ? Object : Object, Function, String, Object, typeof Function === "undefined" ? Object : Function, void 0, void 0, Object, Function, Boolean, Boolean, String]), _dec3 = Reflect.metadata("design:paramtypes", [typeof Symbol === "undefined" ? Object : Symbol, Object, String, void 0, String, String, typeof Maybe === "undefined" ? Object : Maybe, Object, Object, Array, Array, void 0, Boolean, void 0, String, typeof Object === "undefined" ? Object : Object, Object]), _dec4 = Decorate(), _dec5 = Reflect.metadata("design:paramtypes", [typeof Decorate.Name === "undefined" ? Object : Decorate.Name, typeof Decorate.Name === "undefined" ? Object : Decorate.Name]), _dec6 = Decorate(), _dec7 = Reflect.metadata("design:paramtypes", [String]), _dec(_class = _dec2(_class = (_class2 = class Sample {
+var StringEnum;
+
+(function (StringEnum) {
+  StringEnum["a"] = "avalue";
+  StringEnum["b"] = "bvalue";
+})(StringEnum || (StringEnum = {}));
+
+let Sample = (_dec = Decorate(), _dec2 = Reflect.metadata("design:paramtypes", [typeof String === "undefined" ? Object : String, typeof Number === "undefined" ? Object : Number, Number, String, Boolean, String, Number, typeof Object === "undefined" ? Object : Object, Function, String, Object, typeof Function === "undefined" ? Object : Function, void 0, void 0, Object, Function, Boolean, Boolean, String]), _dec3 = Reflect.metadata("design:paramtypes", [typeof Symbol === "undefined" ? Object : Symbol, Object, String, void 0, String, String, typeof Maybe === "undefined" ? Object : Maybe, Object, Object, Array, Array, void 0, Boolean, void 0, String, typeof Object === "undefined" ? Object : Object, Object, typeof StringEnum === "undefined" ? Object : StringEnum]), _dec4 = Decorate(), _dec5 = Reflect.metadata("design:paramtypes", [typeof Decorate.Name === "undefined" ? Object : Decorate.Name, typeof Decorate.Name === "undefined" ? Object : Decorate.Name]), _dec6 = Decorate(), _dec7 = Reflect.metadata("design:paramtypes", [String]), _dec(_class = _dec2(_class = (_class2 = class Sample {
   constructor(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18 = 'abc') {
     this.p0 = p0;
   }
 
-  method(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16) {}
+  method(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17) {}
   /**
    * Member Expression
    */
