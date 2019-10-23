@@ -12,7 +12,6 @@ describe('serializeType', () => {
   test('should return void zero for untyped nodes', () => {
     const node: t.FunctionExpression = template.expression
       .ast`function (param) {}` as any;
-    console.log(node);
     expect(serializeType(null as any, node.params[0])).toEqual(VoidZero);
   });
 
