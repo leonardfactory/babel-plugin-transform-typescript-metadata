@@ -1,4 +1,4 @@
-import { types as t } from '@babel/core';
+import * as t from '@babel/types';
 import { NodePath } from '@babel/traverse';
 
 type InferArray<T> = T extends Array<infer A> ? A : never;
@@ -97,9 +97,7 @@ export function isClassType(className: string, node: t.Expression): boolean {
       return isClassType(className, node.object);
     default:
       throw new Error(
-        `The property expression at ${
-          node.start
-        } is not valid as a Type to be used in Reflect.metadata`
+        `The property expression at ${node.start} is not valid as a Type to be used in Reflect.metadata`
       );
   }
 }
