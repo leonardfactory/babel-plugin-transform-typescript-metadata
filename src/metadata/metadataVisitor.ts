@@ -16,6 +16,30 @@ export function metadataVisitor(
 
       if (!decorators || decorators.length === 0) return;
 
+      /**
+       * Handle Getter by adding `design:type`.
+       */
+      if (field.kind === 'get') {
+        if (!field.returnType || field.returnType.type === 'TSTypeAnnotation') {
+          decorators!.push(
+            t.decorator(
+              t.callExpression(
+                t.memberExpression(
+                  t.identifier('Reflect'),
+                  t.identifier('metadata')
+                ),
+                [
+                  t.stringLiteral('design:type'),
+                  field.returnType
+                    ? serializeType(classPath, field.returnType)
+                    : t.stringLiteral('Object')
+                ]
+              )
+            )
+          );
+        }
+      }
+
       decorators!.push(
         t.decorator(
           t.callExpression(
