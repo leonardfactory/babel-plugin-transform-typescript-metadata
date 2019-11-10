@@ -84,6 +84,36 @@ function serializeTypeReferenceNode(
   );
 }
 
+function serializeTypeImportNode(
+  className: string,
+  node: t.TSImportType
+) {
+  /**
+   * We need to save references to this type since it is going
+   * to be used as a Value (and not just as a Type) here.
+   *
+   * This is resolved in main plugin method, calling
+   * `path.scope.crawl()` which updates the bindings.
+   */
+  const reference = serializeReference(node.qualifier!);
+
+  /**
+   * We don't know if type is just a type (interface, etc.) or a concrete
+   * value (class, etc.).
+   * `typeof` operator allows us to use the expression even if it is not
+   * defined, fallback is just `Object`.
+   */
+  return t.conditionalExpression(
+    t.binaryExpression(
+      '===',
+      t.unaryExpression('typeof', reference),
+      t.stringLiteral('undefined')
+    ),
+    t.identifier('Object'),
+    t.clone(reference)
+  );
+}
+
 /**
  * Checks if node (this should be the result of `serializeReference`) member
  * expression or identifier is a reference to self (class name).
@@ -190,6 +220,9 @@ function serializeTypeNode(className: string, node: t.TSType): SerializedType {
 
     case 'TSConditionalType':
       return serializeTypeList(className, [node.trueType, node.falseType]);
+
+    case 'TSImportType':
+      return serializeTypeImportNode(className, node);
 
     case 'TSTypeQuery':
     case 'TSTypeOperator':
