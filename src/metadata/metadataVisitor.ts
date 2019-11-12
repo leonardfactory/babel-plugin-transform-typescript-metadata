@@ -15,23 +15,48 @@ export function metadataVisitor(
         field.kind === 'constructor' ? classNode.decorators : field.decorators;
 
       if (!decorators || decorators.length === 0) return;
-
-      decorators!.push(
-        t.decorator(
-          t.callExpression(
-            t.memberExpression(
-              t.identifier('Reflect'),
-              t.identifier('metadata')
-            ),
-            [
-              t.stringLiteral('design:paramtypes'),
-              t.arrayExpression(
-                field.params.map(param => serializeType(classPath, param))
-              )
-            ]
+      if(field.kind === 'get') {
+        field.decorators!.push(
+          t.decorator(
+            t.callExpression(
+              t.memberExpression(
+                t.identifier('Reflect'),
+                t.identifier('metadata')
+              ),
+              [t.stringLiteral('design:type'), serializeType(classPath, field.returnType)]
+            )
           )
-        )
-      );
+        );
+      } else if(field.kind === 'set') {
+        field.decorators!.push(
+          t.decorator(
+            t.callExpression(
+              t.memberExpression(
+                t.identifier('Reflect'),
+                t.identifier('metadata')
+              ),
+              [t.stringLiteral('design:type'), field.params.map(param => serializeType(classPath, param)).reduce(value => value)]
+            )
+          )
+        );
+      } else {
+        decorators!.push(
+          t.decorator(
+            t.callExpression(
+              t.memberExpression(
+                t.identifier('Reflect'),
+                t.identifier('metadata')
+              ),
+              [
+                t.stringLiteral('design:paramtypes'),
+                t.arrayExpression(
+                  field.params.map(param => serializeType(classPath, param))
+                )
+              ]
+            )
+          )
+        );
+      }
       break;
 
     case 'ClassProperty':
