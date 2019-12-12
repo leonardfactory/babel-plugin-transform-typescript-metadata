@@ -2,6 +2,24 @@ import { NodePath } from '@babel/traverse';
 import { types as t } from '@babel/core';
 import { serializeType } from './serializeType';
 
+function createMetadataDesignDecorator(
+  design: 'design:type' | 'design:paramtypes' | 'design:returntype' | 'design:typeinfo',
+  typeArg: t.Expression | t.SpreadElement | t.JSXNamespacedName | t.ArgumentPlaceholder
+): t.Decorator {
+  return t.decorator(
+    t.callExpression(
+      t.memberExpression(
+        t.identifier('Reflect'),
+        t.identifier('metadata')
+      ),
+      [
+        t.stringLiteral(design),
+        typeArg
+      ]
+    )
+  )
+}
+
 export function metadataVisitor(
   classPath: NodePath<t.ClassDeclaration>,
   path: NodePath<t.ClassProperty | t.ClassMethod>
@@ -17,21 +35,22 @@ export function metadataVisitor(
       if (!decorators || decorators.length === 0) return;
 
       decorators!.push(
-        t.decorator(
-          t.callExpression(
-            t.memberExpression(
-              t.identifier('Reflect'),
-              t.identifier('metadata')
-            ),
-            [
-              t.stringLiteral('design:paramtypes'),
-              t.arrayExpression(
-                field.params.map(param => serializeType(classPath, param))
-              )
-            ]
+        createMetadataDesignDecorator(
+          'design:type',
+          t.identifier('Function')
+        )
+      );
+      decorators!.push(
+        createMetadataDesignDecorator(
+          'design:paramtypes',
+          t.arrayExpression(
+            field.params.map(param => serializeType(classPath, param))
           )
         )
       );
+      // Hint: `design:returntype` could also be implemented here, although this seems
+      // quite complicated to achieve without the TypeScript compiler.
+      // See https://github.com/microsoft/TypeScript/blob/f807b57356a8c7e476fedc11ad98c9b02a9a0e81/src/compiler/transformers/ts.ts#L1315
       break;
 
     case 'ClassProperty':
@@ -44,14 +63,9 @@ export function metadataVisitor(
         return;
 
       field.decorators!.push(
-        t.decorator(
-          t.callExpression(
-            t.memberExpression(
-              t.identifier('Reflect'),
-              t.identifier('metadata')
-            ),
-            [t.stringLiteral('design:type'), serializeType(classPath, field)]
-          )
+        createMetadataDesignDecorator(
+          'design:type',
+          serializeType(classPath, field)
         )
       );
       break;
