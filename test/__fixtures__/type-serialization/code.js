@@ -3,6 +3,11 @@ import { Decorate } from './Decorate';
 
 const sym = Symbol();
 
+enum StringEnum {
+  a = 'avalue',
+  b = 'bvalue'
+}
+
 @Decorate()
 class Sample {
   constructor(
@@ -46,6 +51,7 @@ class Sample {
     p14: (string | (string | null)),
     p15: Object,
     p16: any,
+    p17: StringEnum,
   ) {}
 
   /**
