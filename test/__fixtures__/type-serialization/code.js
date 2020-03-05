@@ -46,6 +46,7 @@ class Sample {
     p14: (string | (string | null)),
     p15: Object,
     p16: any,
+    p17: bigint,
   ) {}
 
   /**
