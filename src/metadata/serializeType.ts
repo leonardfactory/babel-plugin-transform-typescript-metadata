@@ -97,9 +97,7 @@ export function isClassType(className: string, node: t.Expression): boolean {
       return isClassType(className, node.object);
     default:
       throw new Error(
-        `The property expression at ${
-          node.start
-        } is not valid as a Type to be used in Reflect.metadata`
+        `The property expression at ${node.start} is not valid as a Type to be used in Reflect.metadata`
       );
   }
 }
@@ -178,6 +176,7 @@ function serializeTypeNode(className: string, node: t.TSType): SerializedType {
       }
 
     case 'TSNumberKeyword':
+    case 'TSBigIntKeyword' as any: // Still not in ``@babel/core` typings
       return t.identifier('Number');
 
     case 'TSSymbolKeyword':

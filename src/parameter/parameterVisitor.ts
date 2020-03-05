@@ -1,6 +1,45 @@
 import { NodePath } from '@babel/traverse';
 import { types as t } from '@babel/core';
 
+/**
+ * Helper function to create a field/class decorator from a parameter decorator.
+ * Field/class decorators get three arguments: the class, the name of the method
+ * (or 'undefined' in the case of the constructor) and the position index of the
+ * parameter in the argument list.
+ * Some of this information, the index, is only available at transform time, and
+ * has to be stored. The other arguments are part of the decorator signature and
+ * will be passed to the decorator anyway. But the decorator has to be called
+ * with all three arguments at runtime, so this creates a function wrapper, which
+ * takes the target and the key, and adds the index to it.
+ *
+ * Inject() becomes function(target, key) { return Inject()(target, key, 0) }
+ *
+ * @param paramIndex the index of the parameter inside the function call
+ * @param decoratorExpression the decorator expression, the return object of SomeParameterDecorator()
+ * @param isConstructor indicates if the key should be set to 'undefined'
+ */
+function createParamDecorator(
+  paramIndex: number,
+  decoratorExpression: t.Expression,
+  isConstructor: boolean = false
+) {
+  return t.decorator(
+    t.functionExpression(
+      null, // anonymous function
+      [t.identifier('target'), t.identifier('key')],
+      t.blockStatement([
+        t.returnStatement(
+          t.callExpression(decoratorExpression, [
+            t.identifier('target'),
+            t.identifier(isConstructor ? 'undefined' : 'key'),
+            t.numericLiteral(paramIndex)
+          ])
+        )
+      ])
+    )
+  );
+}
+
 export function parameterVisitor(
   classPath: NodePath<t.ClassDeclaration>,
   path: NodePath<t.ClassMethod> | NodePath<t.ClassProperty>
@@ -10,7 +49,6 @@ export function parameterVisitor(
   if (path.node.key.type !== 'Identifier') return;
 
   const methodPath = path as NodePath<t.ClassMethod>;
-  const methodName = path.node.key.name;
   const params = methodPath.get('params') || [];
 
   params.slice().forEach(function(param) {
@@ -24,30 +62,32 @@ export function parameterVisitor(
 
     if (identifier == null) return;
 
-    let resultantDecorator;
+    let resultantDecorator: t.Decorator | undefined;
 
     ((param.node as t.Identifier).decorators || [])
       .slice()
       .forEach(function(decorator) {
-        const className = classPath.node!.id!.name;
-
         if (methodPath.node.kind === 'constructor') {
-          resultantDecorator = t.callExpression(decorator.expression, [
-            t.identifier(className),
-            t.identifier('undefined'),
-            t.numericLiteral(param.key as number)
-          ]);
+          resultantDecorator = createParamDecorator(
+            param.key as number,
+            decorator.expression,
+            true
+          );
+          if (!classPath.node.decorators) {
+            classPath.node.decorators = [];
+          }
+          classPath.node.decorators.push(resultantDecorator);
         } else {
-          resultantDecorator = t.callExpression(decorator.expression, [
-            t.identifier(`${className}.prototype`),
-            t.stringLiteral(methodName),
-            t.numericLiteral(param.key as number)
-          ]);
+          resultantDecorator = createParamDecorator(
+            param.key as number,
+            decorator.expression,
+            false
+          );
+          if (!methodPath.node.decorators) {
+            methodPath.node.decorators = [];
+          }
+          methodPath.node.decorators.push(resultantDecorator);
         }
-
-        const expression = t.expressionStatement(resultantDecorator);
-
-        classPath.insertAfter(expression);
       });
 
     if (resultantDecorator) {

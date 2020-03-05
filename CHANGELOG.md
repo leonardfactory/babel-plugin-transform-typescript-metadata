@@ -1,3 +1,21 @@
+# [0.3.0](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.2.2...v0.3.0) (2020-03-05)
+
+
+### ✨ Features
+
+* Add support for TSBigIntKeyword ([358a689](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/358a689))
+* Move param dec to class ([1371f6b](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/1371f6b))
+
+
+### 🐛 Bug Fixes
+
+* Restored [@babel](https://github.com/babel)/core types to allow TSC checking ([55ff485](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/55ff485))
+
+
+### 🏗 Chore
+
+* Update release-it to v11+ ([e61386f](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/e61386f))
+
 ## [0.2.2](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.2.1...v0.2.2) (2019-03-27)
 
 
