@@ -1,4 +1,4 @@
-import * as t from '@babel/types';
+import { types as t } from '@babel/core';
 import { NodePath } from '@babel/traverse';
 
 type InferArray<T> = T extends Array<infer A> ? A : never;
