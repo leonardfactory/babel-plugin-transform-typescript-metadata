@@ -143,13 +143,3 @@ export const lazyInject = fixPropertyDecorator(originalLazyInject);
   concrete values (like classes, etc.). In order to resolve this, we emit the
   following: `typeof Type === 'undefined' ? Object : Type`. The code has the
   advantage of not throwing. If you know a better way to do this, let me know!
-- Parameter decorators are emitted right _after_ the `ClassDeclaration` node,
-  like:
-
-  ```js
-  let A = (/* ... */)
-  Inject()(A.prototype, 'methodName', 1);
-  ```
-
-  I'm not sure if this can cause issue with scoping, if you get in troubles with
-  this kind of decorators, please open an issue.
