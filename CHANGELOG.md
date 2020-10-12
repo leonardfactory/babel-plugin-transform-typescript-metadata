@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.3.0...v0.3.1) (2020-10-12)
+
+
+### 🐛 Bug Fixes
+
+* Use cloneDeep to keep reference linked ([869a913](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/869a913))
+
 # [0.3.0](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.2.2...v0.3.0) (2020-03-05)
 
 
