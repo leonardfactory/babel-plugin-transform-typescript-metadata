@@ -80,7 +80,7 @@ function serializeTypeReferenceNode(
       t.stringLiteral('undefined')
     ),
     t.identifier('Object'),
-    t.clone(reference)
+    t.cloneDeep(reference)
   );
 }
 
