@@ -21,6 +21,7 @@ function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
 
   if (param.type === 'ClassProperty') return param;
   if (param.type === 'Identifier') return param;
+  if (param.type === 'ObjectPattern') return param;
 
   if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier')
     return param.left;
