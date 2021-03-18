@@ -14,6 +14,9 @@ class MyOtherClass {
 
   @decorate('named')
   method(@inject() param: Injected, @arg() schema: Schema) {}
+
+  @decorateObjectSpread()
+  methodWithObjectSpread(@argObjectSpread() { name }: Schema) {}
 }
 
 @Decorate
