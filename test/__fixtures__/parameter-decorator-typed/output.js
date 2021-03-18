@@ -20,7 +20,9 @@ let MyOtherClass = (_dec4 = function (target, key) {
   return inject()(target, key, 0);
 }, _dec13 = function (target, key) {
   return arg()(target, key, 1);
-}, _dec14 = Reflect.metadata("design:type", Function), _dec15 = Reflect.metadata("design:paramtypes", [typeof Injected === "undefined" ? Object : Injected, typeof Schema === "undefined" ? Object : Schema]), _dec16 = decorateObjectSpread(), _dec17 = Reflect.metadata("design:type", Function), _dec18 = Reflect.metadata("design:paramtypes", [typeof Schema === "undefined" ? Object : Schema]), _dec4(_class2 = _dec5(_class2 = _dec6(_class2 = _dec7(_class2 = (_class3 = class MyOtherClass {
+}, _dec14 = Reflect.metadata("design:type", Function), _dec15 = Reflect.metadata("design:paramtypes", [typeof Injected === "undefined" ? Object : Injected, typeof Schema === "undefined" ? Object : Schema]), _dec16 = function (target, key) {
+  return argObjectSpread()(target, key, 0);
+}, _dec17 = Reflect.metadata("design:type", Function), _dec18 = Reflect.metadata("design:paramtypes", [typeof SchemaObjectSpread === "undefined" ? Object : SchemaObjectSpread]), _dec4(_class2 = _dec5(_class2 = _dec6(_class2 = _dec7(_class2 = (_class3 = class MyOtherClass {
   constructor(parameter, otherParam) {
     this.parameter = parameter;
   }
@@ -29,8 +31,7 @@ let MyOtherClass = (_dec4 = function (target, key) {
 
   method(param, schema) {}
 
-  methodWithObjectSpread(@argObjectSpread()
-  {
+  methodWithObjectSpread({
     name
   }) {}
 
