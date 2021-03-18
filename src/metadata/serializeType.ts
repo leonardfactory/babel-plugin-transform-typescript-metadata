@@ -16,7 +16,7 @@ function createVoidZero() {
  * @todo Array and Objects spread are not supported.
  * @todo Rest parameters are not supported.
  */
-function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | null {
+function getTypedNode(param: Parameter): t.Identifier | t.ClassProperty | t.ObjectPattern | null {
   if (param == null) return null;
 
   if (param.type === 'ClassProperty') return param;
