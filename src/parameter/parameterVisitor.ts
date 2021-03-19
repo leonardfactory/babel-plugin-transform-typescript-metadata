@@ -53,7 +53,7 @@ export function parameterVisitor(
 
   params.slice().forEach(function(param) {
     let identifier =
-      param.node.type === 'Identifier'
+      param.node.type === 'Identifier' || param.node.type === 'ObjectPattern'
         ? param.node
         : param.node.type === 'TSParameterProperty' &&
           param.node.parameter.type === 'Identifier'
