@@ -1,3 +1,21 @@
+## [0.3.2](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.3.1...v0.3.2) (2021-03-19)
+
+
+### 🛠 Improvements
+
+* Fixed up return type to include objectpattern type ([368eb09](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/368eb09))
+
+
+### 📚 Documentation
+
+* Add documentation about webpack complains ([a397113](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/a397113))
+
+
+### 🏗 Chore
+
+* Added test for object spread argument ([d6ec125](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/d6ec125))
+* Fixed missing call to ObjectSpread decorator ([ee28b83](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/ee28b83))
+
 ## [0.3.1](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.3.0...v0.3.1) (2020-10-12)
 
 
