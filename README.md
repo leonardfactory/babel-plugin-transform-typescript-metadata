@@ -139,6 +139,11 @@ export const lazyInject = fixPropertyDecorator(originalLazyInject);
 
 ## Current Pitfalls
 
+- If you are using webpack and it complains about missing exports due to types
+  not being removed, you can switch from `import { MyType } from ...` to 
+  `import type { MyType } from ...`. See [#46](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/issues/46) for details and 
+  examples.
+
 - We cannot know if type annotations are just types (i.e. `IMyInterface`) or
   concrete values (like classes, etc.). In order to resolve this, we emit the
   following: `typeof Type === 'undefined' ? Object : Type`. The code has the
