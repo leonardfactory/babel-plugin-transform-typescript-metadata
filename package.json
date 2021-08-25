@@ -3,6 +3,7 @@
   "version": "0.3.2",
   "description": "Babel plugin to emit decorator metadata like typescript compiler",
   "main": "lib/plugin.js",
+  "types": "lib/plugin.d.ts",
   "repository": "https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata.git",
   "author": "Leonardo Ascione <leonardo.ascione@gmail.com>",
   "license": "MIT",
@@ -17,10 +18,10 @@
     "reflect-metadata"
   ],
   "scripts": {
-    "dev": "babel src -w -d lib -x '.ts,.tsx'",
+    "dev": "babel src -w -d lib -x \".ts\"",
     "build": "yarn build:lib && yarn build:types",
-    "prebuild:lib": "rm -rf lib",
-    "build:lib": "babel src -d lib -x '.ts,.tsx'",
+    "prebuild:lib": "rimraf lib",
+    "build:lib": "babel src -d lib -x \".ts\"",
     "build:types": "tsc --emitDeclarationOnly",
     "check-types": "tsc --noEmit",
     "release": "yarn test && yarn build && release-it",
@@ -60,6 +61,7 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
     "@babel/template": "^7.6.0",
+    "@babel/traverse": "^7.6.4",
     "@babel/types": "^7.6.3",
     "@favoloso/conventional-changelog-emoji": "^0.10.0",
     "@release-it/conventional-changelog": "^1.1.0",
@@ -70,9 +72,22 @@
     "jest": "^24.9.0",
     "jest-file-snapshot": "^0.3.7",
     "release-it": "13.7.1",
+    "rimraf": "^3.0.2",
     "typescript": "^3.6.4"
   },
   "dependencies": {
     "@babel/helper-plugin-utils": "^7.0.0"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7",
+    "@babel/traverse": "^7"
+  },
+  "peerDependenciesMeta": {
+    "@babel/core": {
+      "optional": false
+    },
+    "@babel/traverse": {
+      "optional": true
+    }
   }
 }

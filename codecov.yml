@@ -1,0 +1,6 @@
+ignore:
+  - "lib"
+  - "examples"
+  - "types"
+  - "test"
+  - "node_modules"
