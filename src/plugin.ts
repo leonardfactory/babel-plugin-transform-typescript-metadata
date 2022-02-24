@@ -1,7 +1,5 @@
 import { PluginObj } from '@babel/core';
 import { declare } from '@babel/helper-plugin-utils';
-import { parameterVisitor } from './parameter/parameterVisitor';
-import { metadataVisitor } from './metadata/metadataVisitor';
 import { transform } from './transform';
 
 export default declare(

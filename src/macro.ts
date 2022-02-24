@@ -3,7 +3,7 @@ import { transform } from './transform';
 
 const metadataMacro: MacroHandler = ({ references }) => {
   references.default.forEach(reference => {
-    const decorator = reference.findParent(parent => parent.isDecorator())
+    const decorator = reference.findParent(parent => parent.isDecorator());
     if (!decorator) {
       throw new Error("Metadata macro should be used as class decorator");
     }
@@ -12,10 +12,11 @@ const metadataMacro: MacroHandler = ({ references }) => {
       throw new Error("Metadata macro should be used as class decorator");
     }
     if (classDeclaration.isClassDeclaration()) {
-      if (classDeclaration.node.decorators) {
-        classDeclaration.node.decorators = classDeclaration.node.decorators.filter(it => it !== decorator.node);
+      if (!classDeclaration.node.decorators) {
+        classDeclaration.node.decorators = [];
       }
       transform(classDeclaration);
+      classDeclaration.node.decorators = classDeclaration.node.decorators.filter(it => it !== decorator.node);
     }
   })
 };
