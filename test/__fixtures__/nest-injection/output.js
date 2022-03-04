@@ -1,4 +1,4 @@
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -7,7 +7,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
 import { AppService } from './app.service';
-export let AppController = (_dec = Controller(), _dec2 = Reflect.metadata("design:type", Function), _dec3 = Reflect.metadata("design:paramtypes", [typeof AppService === "undefined" ? Object : AppService]), _dec4 = Inject(), _dec5 = Reflect.metadata("design:type", typeof AppService === "undefined" ? Object : AppService), _dec6 = Inject(), _dec7 = Reflect.metadata("design:type", typeof AppService === "undefined" ? Object : AppService), _dec8 = Get(), _dec9 = Reflect.metadata("design:type", Function), _dec10 = Reflect.metadata("design:paramtypes", []), _dec(_class = _dec2(_class = _dec3(_class = (_class2 = (_temp = class AppController {
+export let AppController = (_dec = Controller(), _dec2 = Reflect.metadata("design:type", Function), _dec3 = Reflect.metadata("design:paramtypes", [typeof AppService === "undefined" ? Object : AppService]), _dec4 = Inject(), _dec5 = Reflect.metadata("design:type", typeof AppService === "undefined" ? Object : AppService), _dec6 = Inject(), _dec7 = Reflect.metadata("design:type", typeof AppService === "undefined" ? Object : AppService), _dec8 = Get(), _dec9 = Reflect.metadata("design:type", Function), _dec10 = Reflect.metadata("design:paramtypes", []), _dec(_class = _dec2(_class = _dec3(_class = (_class2 = class AppController {
   constructor(appService) {
     this.appService = appService;
 
@@ -20,7 +20,7 @@ export let AppController = (_dec = Controller(), _dec2 = Reflect.metadata("desig
     return this.appService.getHello();
   }
 
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "appService", [_dec4, _dec5], {
+}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "appService", [_dec4, _dec5], {
   configurable: true,
   enumerable: true,
   writable: true,
