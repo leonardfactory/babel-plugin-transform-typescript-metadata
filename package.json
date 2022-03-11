@@ -91,6 +91,9 @@
     },
     "@babel/traverse": {
       "optional": true
+    },
+    "babel-plugin-macros": {
+      "optional": true
     }
   }
 }
