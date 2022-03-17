@@ -1,9 +1,9 @@
+import { types } from '@babel/core';
 import { NodePath } from '@babel/traverse';
-import { ClassDeclaration } from '@babel/types';
 import { metadataVisitor } from './metadata/metadataVisitor';
 import { parameterVisitor } from './parameter/parameterVisitor';
 
-export function transform(path: NodePath<ClassDeclaration>) {
+export function transform(path: NodePath<types.ClassDeclaration>) {
   for (const field of path.get('body').get('body')) {
     if (
       field.type !== 'ClassMethod' &&
