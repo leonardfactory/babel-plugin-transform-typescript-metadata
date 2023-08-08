@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 let SomeService = (_dec = Injectable(), _dec2 = function (target, key) {
   return Inject('aws.s3')(target, undefined, 0);
-}, _dec3 = Reflect.metadata("design:type", Function), _dec4 = Reflect.metadata("design:paramtypes", [typeof _awsSdk.default.S3 === "undefined" ? Object : _awsSdk.default.S3]), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = class SomeService {
+}, _dec3 = Reflect.metadata?.("design:type", Function) || (t => t), _dec4 = Reflect.metadata?.("design:paramtypes", [typeof _awsSdk.default.S3 === "undefined" ? Object : _awsSdk.default.S3]) || (t => t), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = class SomeService {
   constructor(s3client) {
     this.s3client = s3client;
   }
