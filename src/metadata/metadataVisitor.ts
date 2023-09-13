@@ -4,7 +4,7 @@ import { serializeType } from './serializeType';
 
 function createMetadataDesignDecorator(
   design: 'design:type' | 'design:paramtypes' | 'design:returntype' | 'design:typeinfo',
-  typeArg: t.Expression | t.SpreadElement | t.JSXNamespacedName | t.ArgumentPlaceholder
+  typeArg: t.Expression | t.SpreadElement | t.JSXNamespacedName
 ): t.Decorator {
   return t.decorator(
     t.logicalExpression(
