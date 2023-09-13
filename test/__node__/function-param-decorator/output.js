@@ -20,13 +20,13 @@ let Named = (_dec = function (target, key) {
   return (0, _decorator.default)(_some.Some)(target, undefined, 0);
 }, _dec2 = function (target, key) {
   return (0, _decorator.default)(target, undefined, 1);
-}, _dec3 = Reflect.metadata("design:type", Function), _dec4 = Reflect.metadata("design:paramtypes", [typeof _some.Some === "undefined" ? Object : _some.Some, typeof _some.Some === "undefined" ? Object : _some.Some]), _dec5 = (0, _based.default)(), _dec6 = function (target, key) {
+}, _dec3 = Reflect.metadata?.("design:type", Function) || (t => t), _dec4 = Reflect.metadata?.("design:paramtypes", [typeof _some.Some === "undefined" ? Object : _some.Some, typeof _some.Some === "undefined" ? Object : _some.Some]) || (t => t), _dec5 = (0, _based.default)(), _dec6 = function (target, key) {
   return (0, _graphql.Args)()(target, key, 0);
 }, _dec7 = function (target, key) {
   return (0, _graphql.Context)()(target, key, 1);
 }, _dec8 = function (target, key) {
   return (0, _decorator.default)(_xyz.Xyz)(target, key, 2);
-}, _dec9 = Reflect.metadata("design:type", Function), _dec10 = Reflect.metadata("design:paramtypes", [typeof _graphql.Args === "undefined" ? Object : _graphql.Args, typeof _graphql.Context === "undefined" ? Object : _graphql.Context, Object]), (0, _based.default)(_class = _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = (_class2 = class Named {
+}, _dec9 = Reflect.metadata?.("design:type", Function) || (t => t), _dec10 = Reflect.metadata?.("design:paramtypes", [typeof _graphql.Args === "undefined" ? Object : _graphql.Args, typeof _graphql.Context === "undefined" ? Object : _graphql.Context, Object]) || (t => t), (0, _based.default)(_class = _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = (_class2 = class Named {
   constructor(param, param2) {
     this.param = param;
     this.param2 = param2;

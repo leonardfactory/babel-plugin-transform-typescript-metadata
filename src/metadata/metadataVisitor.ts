@@ -4,18 +4,26 @@ import { serializeType } from './serializeType';
 
 function createMetadataDesignDecorator(
   design: 'design:type' | 'design:paramtypes' | 'design:returntype' | 'design:typeinfo',
-  typeArg: t.Expression | t.SpreadElement | t.JSXNamespacedName | t.ArgumentPlaceholder
+  typeArg: t.Expression | t.SpreadElement | t.JSXNamespacedName
 ): t.Decorator {
   return t.decorator(
-    t.callExpression(
-      t.memberExpression(
-        t.identifier('Reflect'),
-        t.identifier('metadata')
+    t.logicalExpression(
+      '||',
+      t.optionalCallExpression(
+        t.memberExpression(
+          t.identifier('Reflect'),
+          t.identifier('metadata')
+        ),
+        [
+          t.stringLiteral(design),
+          typeArg
+        ],
+        true
       ),
-      [
-        t.stringLiteral(design),
-        typeArg
-      ]
+      t.arrowFunctionExpression(
+        [t.identifier('t')],
+        t.identifier('t')
+      )
     )
   )
 }
