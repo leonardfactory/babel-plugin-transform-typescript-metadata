@@ -8,16 +8,21 @@ on:
 
 jobs:
   build:
-    name: Check TypeScript and Test
+    name: Check TypeScript and Test (Node.js ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 22]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v6
         with:
-          node-version: '16'
+          node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn install
       - run: yarn build
       - run: yarn check-types
+      - run: yarn pretest
+        if: matrix.node-version >= 22
       - run: yarn test:ci
       - uses: codecov/codecov-action@v2
