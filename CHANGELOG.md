@@ -1,3 +1,26 @@
+# [0.4.0](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.3.2...v0.4.0) (2025-10-29)
+
+
+### ✨ Features
+
+* Support Babel 8 ([52c122b](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/52c122b))
+
+
+### 🐛 Bug Fixes
+
+* : make [@babel](https://github.com/babel)/core optional ([9bf262c](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/9bf262c))
+
+
+### 📚 Documentation
+
+* Added gh build status badge ([3a52ff7](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/3a52ff7))
+* Update readme badge ([1a78d42](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/1a78d42))
+
+
+### 🏗 Chore
+
+* Switch from travis to gh actions ([4c98c57](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/commit/4c98c57))
+
 ## [0.3.2](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/compare/v0.3.1...v0.3.2) (2021-03-19)
 
 
