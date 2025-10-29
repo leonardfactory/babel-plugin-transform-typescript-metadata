@@ -25,6 +25,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "check-types": "tsc --noEmit",
     "release": "yarn test && yarn build && release-it",
+    "pretest": "cd test/__helpers__/babel-8 && yarn",
     "test": "jest --forceExit",
     "test:dev": "jest --watch",
     "test:ci": "jest --ci --runInBand --coverage --forceExit"
@@ -55,11 +56,12 @@
   "devDependencies": {
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-transform-class-properties": "^7.27.1",
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/plugin-transform-object-rest-spread": "^7.28.4",
     "@babel/preset-env": "^7.6.3",
-    "@babel/preset-typescript": "^7.6.0",
+    "@babel/preset-typescript": "^7.28.5",
     "@babel/template": "^7.6.0",
     "@babel/traverse": "^7.6.4",
     "@babel/types": "^7.6.3",
@@ -79,15 +81,11 @@
     "@babel/helper-plugin-utils": "^7.0.0"
   },
   "peerDependencies": {
-    "@babel/core": "^7",
-    "@babel/traverse": "^7"
+    "@babel/core": "^7.0.0 || ^8.0.0-0"
   },
   "peerDependenciesMeta": {
     "@babel/core": {
       "optional": false
-    },
-    "@babel/traverse": {
-      "optional": true
     }
   }
 }

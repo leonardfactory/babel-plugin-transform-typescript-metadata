@@ -1,19 +1,14 @@
 import path from 'path';
-import { create } from 'babel-test';
+import { define } from './__helpers__/utils';
 
-import { toMatchFile } from 'jest-file-snapshot';
-expect.extend({ toMatchFile });
-
-const { fixtures } = create({
+define('emit metadata with node env', {
   presets: [
     ['@babel/preset-env', { useBuiltIns: false, targets: { node: true } }],
-    ['@babel/preset-typescript', { allExtensions: true }]
+    ['@babel/preset-typescript', { ignoreExtensions: true }]
   ],
   plugins: [
-    require.resolve('../src/plugin'),
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
-    ['@babel/plugin-proposal-class-properties', { loose: true }]
+    require('../src/plugin'),
+    ['@babel/plugin-proposal-decorators', { version: 'legacy' }],
+    ['@babel/plugin-transform-class-properties', { loose: true }]
   ]
-});
-
-fixtures('emit metadata with node env', path.join(__dirname, '__node__'));
+}, path.join(__dirname, '__node__'));

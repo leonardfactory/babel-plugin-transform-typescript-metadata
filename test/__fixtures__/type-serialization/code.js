@@ -1,4 +1,3 @@
-import { Service } from './service';
 import { Decorate } from './Decorate';
 
 const sym = Symbol();

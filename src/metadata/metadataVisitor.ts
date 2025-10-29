@@ -1,5 +1,4 @@
-import { NodePath } from '@babel/traverse';
-import { types as t } from '@babel/core';
+import { types as t, NodePath } from '@babel/core';
 import { serializeType } from './serializeType';
 
 function createMetadataDesignDecorator(
