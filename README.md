@@ -1,6 +1,6 @@
 # babel-plugin-transform-typescript-metadata
 
-![GitHub Workflow Build Status](https://img.shields.io/github/workflow/status/leonardfactory/babel-plugin-transform-typescript-metadata/CI/master)
+![GitHub Workflow Build Status](https://img.shields.io/github/actions/workflow/status/leonardfactory/babel-plugin-transform-typescript-metadata/test.yml)
 [![Codecov](https://img.shields.io/codecov/c/github/leonardfactory/babel-plugin-transform-typescript-metadata.svg)](https://codecov.io/gh/leonardfactory/babel-plugin-transform-typescript-metadata)
 [![npm](https://img.shields.io/npm/v/babel-plugin-transform-typescript-metadata.svg?style=popout)](https://www.npmjs.com/package/babel-plugin-transform-typescript-metadata)
 
@@ -124,14 +124,11 @@ let { lazyInject: originalLazyInject } = getDecorators(container);
 
 // Additional function to make properties decorators compatible with babel.
 function fixPropertyDecorator<T extends Function>(decorator: T): T {
-  return ((...args: any[]) => (
-    target: any,
-    propertyName: any,
-    ...decoratorArgs: any[]
-  ) => {
-    decorator(...args)(target, propertyName, ...decoratorArgs);
-    return Object.getOwnPropertyDescriptor(target, propertyName);
-  }) as any;
+  return ((...args: any[]) =>
+    (target: any, propertyName: any, ...decoratorArgs: any[]) => {
+      decorator(...args)(target, propertyName, ...decoratorArgs);
+      return Object.getOwnPropertyDescriptor(target, propertyName);
+    }) as any;
 }
 
 export const lazyInject = fixPropertyDecorator(originalLazyInject);
@@ -140,8 +137,8 @@ export const lazyInject = fixPropertyDecorator(originalLazyInject);
 ## Current Pitfalls
 
 - If you are using webpack and it complains about missing exports due to types
-  not being removed, you can switch from `import { MyType } from ...` to 
-  `import type { MyType } from ...`. See [#46](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/issues/46) for details and 
+  not being removed, you can switch from `import { MyType } from ...` to
+  `import type { MyType } from ...`. See [#46](https://github.com/leonardfactory/babel-plugin-transform-typescript-metadata/issues/46) for details and
   examples.
 
 - We cannot know if type annotations are just types (i.e. `IMyInterface`) or
